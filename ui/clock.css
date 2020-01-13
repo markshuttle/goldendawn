@@ -1,0 +1,83 @@
+* {
+  box-sizing: border-box;
+}
+
+/* ubuntu-300 - latin */
+@font-face {
+  font-family: 'Ubuntu Light';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Ubuntu Light'), local('Ubuntu-Light'),
+       url('ubuntu-v14-latin-300.woff2') format('woff2'); /* Super Modern Browsers */
+}
+/* ubuntu-regular - latin */
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  src: url('ubuntu-v14-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Ubuntu Regular'), local('Ubuntu-Regular'),
+       url('ubuntu-v14-latin-regular.woff2') format('woff2'); /* Super Modern Browsers */
+}
+
+@font-face {
+    font-family: 'Ubuntu Thin';
+    src: url("Ubuntu-Th.ttf") format("truetype");
+    font-style: normal;
+    font-weight: 100;
+}
+
+@font-face {
+    font-family: 'Noto Emoji';
+    src: url('noto-emoji.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'EmojiSymbols';
+    src: url('emojisymbols.woff2') format('woff2');
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 40px;
+  width: 95%;
+  margin: 0 auto;
+  background: #000000;
+  color: #440000;
+  font-family: 'Ubuntu Regular', 'Ubuntu', 'EmojiSymbols', sans-serif, serif;
+  font-weight: 400;
+}
+
+#time {
+  padding: 20px;
+  justify-content: center;
+  font-size: 40vh;
+}
+
+#date {
+  padding: 20px;
+  justify-content: center;
+  font-size: 7vh;
+}
+
+#bottom {
+  display: flex;
+  justify-content: space-between;
+  align-selfx: stretch;
+  font-size: 7vh;
+}
+
+#forecast {
+  padding: 4vh;
+}
+
+#temp {
+  padding: 4vh;
+}
+
+#alarm {
+  padding: 4vh;
+}

@@ -1,0 +1,37 @@
+name: goldendawn
+base: core18
+version: '0.1'
+summary: Sleep-friendly alarm clock appliance web service
+description: |
+  Sleep well, wake well. This idiosyncratic clock does exactly what I want,
+  and it may be fun for you too. It uses a red display to reduce blue light
+  at night, it tells the time and gives the outside temperature based on a
+  Netatmo weather station. It also gives a 24-hour weather conditions
+  forecast courtesy of OpenWeatherMap. From experience, it goes well with
+  a SONY MP-CL1A laser projector, a cardboard box and some duct tape to
+  make an excellent Christmas IoT project.
+
+grade: devel # must be 'stable' to release into candidate/stable channels
+confinement: strict # use 'strict' once you have the right plugs and slots
+
+apps:
+  alarumd:
+    daemon: simple
+    command: bin/alarumd.py
+    plugs: [ network, network-bind ]
+
+parts:
+  goldendawn:
+    plugin: python
+    python-version: python3
+    source: .
+    stage-packages:
+      - python3-requests
+      - python3-pkg-resources
+      - python3-yaml
+    override-build: |
+      mkdir -p $SNAPCRAFT_PART_INSTALL/bin
+      cp bin/alarumd.py $SNAPCRAFT_PART_INSTALL/bin/
+      cp bin/netatmo.py $SNAPCRAFT_PART_INSTALL/bin/
+      cp -r ui $SNAPCRAFT_PART_INSTALL/
+
