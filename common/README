@@ -1,0 +1,19 @@
+The goldendawn alarm clock keeps its config in $SNAP_COMMON/config which
+will likely be /var/snap/goldendawn/common/config for you
+
+For development purposes, run alarumd.py from the top directory of the
+source tree as ./bin/alarumd.py
+
+For configuration, create a file common/config that looks like this:
+
+port: 8080
+netatmo:
+  client_id: 'XXX REGISTER AT NETATMO AS DEVELOPER FOR THIS XXX'
+  client_secret: 'XXX COMES FROM NETATMO WHEN REGISTERED XXX'
+  username: 'XXX email address for your persona netatmo account'
+  password: 'XXX password for netatmo account'
+  station_id: '70:ee:50:xx:xx:xx the mac of your netatmo station'
+ows:
+  app: 'OpenWeatherMap AppID'
+  city: 'XXX OpenWeatherMap CityID'
+
