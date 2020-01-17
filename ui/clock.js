@@ -1,16 +1,70 @@
 
 
 var sound = new Audio("blackbird.mp3");
-// XXX allow passing an alarm time and city ID in the goldendawn service
-var alarmTime = "06:00"
+var alarmTime = null;
 var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 var timediv = document.getElementById('time');
 var datediv = document.getElementById('date');
 var tempdiv = document.getElementById('temp');
+var alarmdiv = document.getElementById('alarm');
 var forecastdiv = document.getElementById('forecast');
 
+function updateAlarm() {
+  fetch('alarm')
+  .then((response) => response.json())
+  .then((alarm) => {
+    if (alarm.hour=='UNSET' || alarm.minute=='UNSET') {
+      alarmTime=null;
+      alarmdiv.innerHTML = '&#x1f514; --:--'
+      }
+    else {
+      hour = parseInt(alarm.hour)%24;
+      minute = parseInt(alarm.minute)%60;
+      alarmdiv.innerHTML = '&#x1f514; ' + addZero(hour) + ':' + addZero(minute);
+      currentTime = new Date();
+      alarmTime = new Date(
+        currentTime.getFullYear(), currentTime.getMonth(),
+        currentTime.getDate(), hour, minute, 0);
+      if (alarmTime < currentTime) { alarmTime.setDate(alarmTime.getDate()+1) };
+    };
+  })
+  .catch(function() {
+    // catch any errors
+    console.log('An error occurred updating the alarm');
+    alarmdiv.innerHTML = '&#x1f514; xx:xx'
+    })
+  };
+
+// set the background to a colour based on the alarm
+function checkAlarm() {
+  if ( alarmTime == null ) {
+    document.body.style.background = '#000000';
+    return;
+    }
+  currentTime = new Date();
+  timeDelta = alarmTime - currentTime;
+  brightest = 150;
+  blue_ramp = 1000*60*60;
+  grey_ramp = 1000*60*10;
+  blue = '00';
+  gr = '00';
+  if ( timeDelta < blue_ramp ) { // approaching alarm
+    blue = Math.trunc(((1 - (timeDelta/blue_ramp))*brightest)).toString(10);
+    if ( timeDelta < grey_ramp ) {
+      gr = Math.trunc(((1 - (timeDelta/grey_ramp))*brightest)).toString(10);
+      };
+    document.body.style.background = 'rgb('+gr+', '+gr+', '+blue+')';
+    }
+  else if ( timeDelta > 23*1000*60*60 ) { // just past alarm
+    timeDelta -= 23*60*60*1000;
+    timeDelta = Math.min(grey_ramp, timeDelta);
+    gr = Math.trunc((timeDelta/grey_ramp)*brightest).toString(10);
+    document.body.style.background = 'rgb('+gr+', '+gr+', '+gr+')';
+    }
+  else { document.body.style.background = '#000000' };
+  };
 
 function setTime() {
   var date = new Date();
@@ -44,6 +98,7 @@ function getTemp() {
   })
   .catch((error) => {
     console.error('Netatmo error:', error);
+    tempdiv.innerHTML = 'xx';
   });
 }
 
@@ -68,7 +123,7 @@ function getForecast() {
   })
   .catch(function() {
     // catch any errors
-    console.log('An error occurred');
+    console.log('An error occurred setting the forecast');
     forecastdiv.innerHTML = 'n/a';
   });
 }
@@ -77,6 +132,7 @@ function getForecast() {
 setTime();
 getTemp();
 getForecast();
+updateAlarm();
 
 // display current time every second
 var currentTimer = '';
@@ -88,6 +144,10 @@ setTimeout( function() {
 var tempTimer = setInterval(getTemp, 1000*60*10);
 // update weather hourly
 var fcTimer = setInterval(getForecast, 1000*60*60);
+// update the alarm every minute
+var alarmTimer = setInterval(updateAlarm, 1000*60*1);
+// update the background colour every 2 seconds
+var lightTimer = setInterval(checkAlarm, 1000*2);
 
 // Ensure formatting of times
 function addZero(time) {

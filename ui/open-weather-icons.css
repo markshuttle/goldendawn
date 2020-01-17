@@ -24,7 +24,7 @@
 
 @font-face {
     font-family: OpenWeatherIcons;
-    src: url("OpenWeatherIcons.woff2") format("woff2"), url("OpenWeatherIcons.woff") format("woff");
+    src: url("OpenWeatherIcons.woff2") format("woff2");
     font-style: normal;
     font-weight: 400;
 }

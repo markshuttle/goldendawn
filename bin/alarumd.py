@@ -57,6 +57,14 @@ try: ows_city = config['ows']['city']
 except KeyError:
   print('ERROR: No OWS city ID provided.')
   sys.exit(1)
+try: alarm_hour = int(config['alarm']['hour'])%24
+except (KeyError, TypeError, ValueError):
+  print('No alarm hour')
+  alarm_hour = 'UNSET'
+try: alarm_minute = int(config['alarm']['minute'])%60
+except (KeyError, TypeError, ValueError):
+  print('No alarm minute')
+  alarm_minute = 'UNSET'
 
 # initialise netatmo
 ws = netatmo.WeatherStation( {
@@ -110,6 +118,15 @@ class AlarumHandler(http.server.SimpleHTTPRequestHandler):
         self.send_header("Content-length", len(self.ows))
         self.end_headers()
         self.wfile.write(self.ows)
+    elif self.path == "/alarm":
+        self.alarm = bytes(
+          '{ "hour": "' + str(alarm_hour) + '",' + \
+          '  "minute": "' + str(alarm_minute) + '"}', 'UTF-8')
+        self.send_response(200)
+        self.send_header("Content-type", "application/json")
+        self.send_header("Content-length", len(self.alarm))
+        self.end_headers()
+        self.wfile.write(self.alarm)
     else:
         http.server.SimpleHTTPRequestHandler.do_GET(self)
 
