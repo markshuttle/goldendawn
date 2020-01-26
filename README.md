@@ -15,7 +15,7 @@ projector like the SONY MP-CL1A or the Nebra Anybeam so that you have no
 stray light patch. Use a fanless projector and fanless compute stick to keep
 the room silent at night. Perfect.
 
-## How do use it
+## How to use it
 
 The alarm is packaged as a snap to use with Ubuntu's standard kiosk service.
 It provides the UI as a web service. If you want a completely locked down
