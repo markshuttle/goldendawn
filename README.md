@@ -1,10 +1,10 @@
-# The GoldenDawn Alarm Clock
+# The Gloaming Alarm Clock
 
 This is an idiosyncratic alarm clock. It does exactly what I want an alarm
 clock to do. It is perfect for you if you want an alarm clock to do exactly
 what it does.
 
-GoldenDawn gives you the time, the current temperature from your Netatmo
+The Gloaming gives you the time, the current temperature from your Netatmo
 weather station, and a 24 hour forecast from OpenWeather. It uses a deep red
 colour to avoid blue light and preserve your night vision. Over the hour
 before your alarm is set, it will raise the blue levels around that to
@@ -23,12 +23,12 @@ and autonomous system, use Ubuntu Core on your compute stick. Otherwise,
 just use classic Ubuntu Server.
 
 
-    sudo snap install mir-kiosk wpe-webkit-mir-kiosk goldendawn
+    sudo snap install mir-kiosk wpe-webkit-mir-kiosk thegloaming
     sudo snap connect wpe-webkit-mir-kiosk:wayland
 
 Now you need to configure your alarm clock. A future version might use snap
 configuration, but for now just create you config YAML as
-/var/snap/goldendawn/common/config - here is an example.
+/var/snap/thegloaming/common/config - here is an example.
 
     port: 8080
     netatmo:
@@ -57,20 +57,20 @@ comes from. THe city ID here is for Cape Town, check out OpenWeatherMap for
 your own city ID at https://openweathermap.org/find  (as a clue check the
 URL of the link to the city name).
 
-If you restart the goldendawn snap now, you should see it as up and running:
+If you restart thegloaming snap now, you should see it as up and running:
 
-    sudo service snap.goldendawn.alarumd status
-    ● snap.goldendawn.alarumd.service - Service for snap application goldendawn.alarumd
-       Loaded: loaded (/etc/systemd/system/snap.goldendawn.alarumd.service; enabled; vendor preset: enabled)
+    sudo service snap.thegloaming.alarumd status
+    ● snap.thegloaming.alarumd.service - Service for snap application thegloaming.alarumd
+       Loaded: loaded (/etc/systemd/system/snap.thegloaming.alarumd.service; enabled; vendor preset: enabled)
        Active: active (running) since Fri 2020-01-17 19:39:33 SAST; 2s ago
      Main PID: 14769 (python3)
         Tasks: 1 (limit: 4576)
-       CGroup: /system.slice/snap.goldendawn.alarumd.service
-               └─14769 /snap/goldendawn/4/usr/bin/python3 /snap/goldendawn/4/bin/alarumd.py
+       CGroup: /system.slice/snap.thegloaming.alarumd.service
+               └─14769 /snap/thegloaming/4/usr/bin/python3 /snap/thegloaming/4/bin/alarumd.py
 
-    Jan 17 19:39:33 localhost systemd[1]: Started Service for snap application goldendawn.alarumd.
+    Jan 17 19:39:33 localhost systemd[1]: Started Service for snap application thegloaming.alarumd.
 
-Now you should configure the web kiosk to get its web page from goldendawn:
+Now you should configure the web kiosk to get its web page from thegloaming:
 
     sudo snap set wpe-webkit-mir-kiosk url=http://localhost:8080/
     sudo snap restart mir-kiosk

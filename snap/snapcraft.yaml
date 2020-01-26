@@ -1,4 +1,4 @@
-name: goldendawn
+name: thegloaming
 base: core18
 version: '0.1'
 summary: Sleep-friendly alarm clock appliance web service
@@ -21,7 +21,7 @@ apps:
     plugs: [ network, network-bind ]
 
 parts:
-  goldendawn:
+  thegloaming:
     plugin: python
     python-version: python3
     source: .

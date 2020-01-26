@@ -1,5 +1,5 @@
-The goldendawn alarm clock keeps its config in $SNAP_COMMON/config which
-will likely be /var/snap/goldendawn/common/config for you
+The thegloaming alarm clock keeps its config in $SNAP_COMMON/config which
+will likely be /var/snap/thegloaming/common/config for you
 
 For development purposes, run alarumd.py from the top directory of the
 source tree as ./bin/alarumd.py
