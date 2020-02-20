@@ -17,11 +17,14 @@ config = None
 try:
   config_path = os.environ['SNAP_COMMON']+'/config'
 except KeyError:
+  print('Trying local config file')
   config_path = './common/config'
 try:
   with open(config_path) as file:
     config = yaml.safe_load(file)
-    if config is None: config = {}
+    if config is None:
+      print('Empty configuration file')
+      config = {}
 except IOError:
   print('Error reading config file')
 try: port = int(config['port'])

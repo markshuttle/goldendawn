@@ -22,13 +22,10 @@ It provides the UI as a web service. If you want a completely locked down
 and autonomous system, use Ubuntu Core on your compute stick. Otherwise,
 just use classic Ubuntu Server.
 
+    sudo snap install thegloaming
 
-    sudo snap install mir-kiosk wpe-webkit-mir-kiosk thegloaming
-    sudo snap connect wpe-webkit-mir-kiosk:wayland
-
-Now you need to configure your alarm clock. A future version might use snap
-configuration, but for now just create you config YAML as
-/var/snap/thegloaming/common/config - here is an example.
+Now you need to configure your alarm clock with a file in
+/var/snap/thegloaming/common/config like this:
 
     port: 8080
     netatmo:
@@ -59,7 +56,9 @@ URL of the link to the city name).
 
 If you restart thegloaming snap now, you should see it as up and running:
 
-    sudo service snap.thegloaming.alarumd status
+  $ sudo snap restart thegloaming
+  Restarted.
+  $ sudo service snap.thegloaming.alarumd status
     ● snap.thegloaming.alarumd.service - Service for snap application thegloaming.alarumd
        Loaded: loaded (/etc/systemd/system/snap.thegloaming.alarumd.service; enabled; vendor preset: enabled)
        Active: active (running) since Fri 2020-01-17 19:39:33 SAST; 2s ago
@@ -70,9 +69,28 @@ If you restart thegloaming snap now, you should see it as up and running:
 
     Jan 17 19:39:33 localhost systemd[1]: Started Service for snap application thegloaming.alarumd.
 
-Now you should configure the web kiosk to get its web page from thegloaming:
+To make sure that it is working, point your web browser at the machine
+hosting thegloaming port 8080 and you should see your alarm clock.
+
+Now, install the web kiosk display system:
+
+    sudo snap install mir-kiosk
+    sudo snap install wpe-webkit-mir-kiosk --beta
+
+Now configure the web kiosk to get its web page from thegloaming:
 
     sudo snap set wpe-webkit-mir-kiosk url=http://localhost:8080/
+
+Also, you want to get rid of the mouse pointer from the display:
+
+    sudo snap set mir-kiosk cursor=none
+
+If you are projecting onto the ceiling, you might want to invert the
+display. You can edit /var/snap/mir-kiosk/current/miral-kiosk.display and
+change orientation from 'normal' to 'inverted' for the relevant display.
+
+And restart the display daemons:
+
     sudo snap restart mir-kiosk
     sudo snap restart wpe-webkit-mir-kiosk
 

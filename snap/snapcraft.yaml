@@ -11,7 +11,7 @@ description: |
   a SONY MP-CL1A laser projector, a cardboard box and some duct tape to
   make an excellent Christmas IoT project.
 
-grade: devel # must be 'stable' to release into candidate/stable channels
+grade: stable # must be 'stable' to release into candidate/stable channels
 confinement: strict # use 'strict' once you have the right plugs and slots
 
 apps:
