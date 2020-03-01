@@ -1,6 +1,6 @@
 name: thegloaming
 base: core18
-version: '0.1'
+version: '0.5'
 summary: Sleep-friendly alarm clock appliance web service
 description: |
   Sleep well, wake well. This idiosyncratic clock does exactly what I want,
